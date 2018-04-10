@@ -1,0 +1,64 @@
+<html>
+<body>
+<pre>
+<h1>µVision3 Build Log</h1>
+<h2>Project:</h2>
+S:\Project2.uv2
+Project File Date:  04/10/2018
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling p2.asm...
+S:\p2.asm(1): error A318: can't open file 'reg932.inc'
+S:\p2.asm(15): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(18): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(28): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(29): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(38): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(39): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(41): warning A41: MISSING 'END' STATEMENT
+Target not created
+Build target 'Target 1'
+assembling p2.asm...
+S:\p2.asm(1): error A318: can't open file 'reg932.inc'
+S:\p2.asm(15): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(18): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(28): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(29): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(38): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(39): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+Target not created
+Build target 'Target 1'
+assembling p2.asm...
+S:\p2.asm(1): error A318: can't open file 'reg932.inc'
+S:\p2.asm(15): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(17): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(25): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(26): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(33): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+S:\p2.asm(34): error A17: INVALID BYTE BASE IN BIT ADDRESS EXPRESSION
+Target not created
+Build target 'Target 1'
+assembling p2.asm...
+linking...
+Program Size: data=8.0 xdata=0 code=42
+creating hex file from "Project2"...
+"Project2" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling p2.asm...
+linking...
+Program Size: data=8.0 xdata=0 code=42
+creating hex file from "Project2"...
+"Project2" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling p2.asm...
+linking...
+Program Size: data=8.0 xdata=0 code=62
+creating hex file from "Project2"...
+"Project2" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+assembling p2.asm...
+linking...
+Program Size: data=8.0 xdata=0 code=102
+creating hex file from "Project2"...
+"Project2" - 0 Error(s), 0 Warning(s).
