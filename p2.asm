@@ -6,27 +6,33 @@ cseg at 0
 	mov 0x91, #0 ;set Port 1 - bidirectional
 	mov 0x84, #0 ;set Port 0 - bidirectoinal
 
-	mov A,#0
-	mov r0,A
+	mov r0,#0
 
 loop:
 	mov c, p0.3 ;sw8
 	jnc up
+	cjne r0, #0Fh, noover
+	sjmp over
+noover:
 	mov c, p2.2 ;sw9
-	jnc down 
-    sjmp loop
-	
+	jnc down
+	cjne r0, #0FFh, nounder
+	sjmp under
+nounder:	 
+    sjmp loop	
 up:
-	mov A,r0
-	add A,#01h
-	mov r0,A
+	inc r0
 	sjmp loop						 
-	
 down:
-	mov A,r0
-	subb A,#01h
-	mov r0,A
+	dec r0 
 	sjmp loop
-
-
+over:
+	mov r0, #0
+	sjmp sound
+under:
+	mov r0, #0
+	sjmp sound
+sound:
+	; Do sound here
+	ljmp loop
 end
