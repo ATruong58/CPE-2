@@ -48,5 +48,17 @@ under:
 	sjmp sound; play sound
 sound:
 	; Do sound here
+	mov TMOD, #02h
+	mov TH0, #205
+	mov TL0, #205
+	setb p1.7; I think this is the speaker
+	clr p2.5;
+	setb TR0
+back:
+	jnb TF0, back
+	clr p1.7
+	clr p2.5
+	clr TR0
+	clr TF0
 	sjmp lights; update lights
 end
