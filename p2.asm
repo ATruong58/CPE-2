@@ -19,12 +19,26 @@ noover:
 	cjne r0, #0FFh, nounder
 	sjmp under
 nounder:	 
-    sjmp loop	
+    sjmp lights	
 up:
+	mov p0.3, #0
 	inc r0
-	sjmp loop						 
+	sjmp lights						 
 down:
+	mov p2.2, #0
 	dec r0 
+	sjmp lights
+lights:
+	mov a, r0
+	cpl a; setup for turning on lights
+	rrc a; send last bit to carry for use
+	mov p1.6, c
+	rrc a; send last bit to carry for use
+	mov p0.6, c
+	rrc a; send last bit to carry for use
+	mov p0.5, c
+	rrc a; send last bit to carry for use
+	mov p2.4, c
 	sjmp loop
 over:
 	mov r0, #0
@@ -34,5 +48,5 @@ under:
 	sjmp sound
 sound:
 	; Do sound here
-	ljmp loop
+	sjmp lights
 end
