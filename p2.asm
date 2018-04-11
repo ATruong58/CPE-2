@@ -10,43 +10,43 @@ cseg at 0
 
 loop:
 	mov c, p0.3 ;sw8
-	jnc up
-	cjne r0, #0Fh, noover
-	sjmp over
+	jnc up; jump if press to inc
+	cjne r0, #10h, noover; if it doesn't equal 15+1 jump over 15+1 convert
+	sjmp over; is over must wrap
 noover:
 	mov c, p2.2 ;sw9
-	jnc down
-	cjne r0, #0FFh, nounder
-	sjmp under
+	jnc down; jump if press to dec
+	cjne r0, #0FFh, nounder; if it doesn't equal 0-1 jump over 0-1 convert
+	sjmp under; is under must wrap
 nounder:	 
-    sjmp lights	
+    sjmp lights; update lights
 up:
-	mov p0.3, #0
-	inc r0
-	sjmp lights						 
+	setb p0.3; reset switch ? may work idk
+	inc r0; increment counter
+	sjmp lights; update lights						 
 down:
-	mov p2.2, #0
-	dec r0 
-	sjmp lights
+	setb p2.2; rest switch ? may work idk
+	dec r0; decrement counter
+	sjmp lights; update lights
 lights:
-	mov a, r0
-	cpl a; setup for turning on lights
+	mov a, r0; move counter val to acc
+	cpl a; invert for lights
 	rrc a; send last bit to carry for use
-	mov p1.6, c
+	mov p1.6, c; set light 0
 	rrc a; send last bit to carry for use
-	mov p0.6, c
+	mov p0.6, c; set light 1
 	rrc a; send last bit to carry for use
-	mov p0.5, c
+	mov p0.5, c; set light 2
 	rrc a; send last bit to carry for use
-	mov p2.4, c
-	sjmp loop
+	mov p2.4, c; set light 3
+	sjmp loop; return to loop
 over:
-	mov r0, #0
-	sjmp sound
+	mov r0, #00h; reset counter to 0
+	sjmp sound; play sound
 under:
-	mov r0, #0
-	sjmp sound
+	mov r0, #0Fh; reset counter to 15
+	sjmp sound; play sound
 sound:
 	; Do sound here
-	sjmp lights
+	sjmp lights; update lights
 end
