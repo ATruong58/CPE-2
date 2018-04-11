@@ -57,7 +57,7 @@ sound:
 back:
 	jnb TF0, back
 	clr p1.7
-	clr p2.5
+	setb p2.5
 	clr TR0
 	clr TF0
 	sjmp lights; update lights
