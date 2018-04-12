@@ -7,13 +7,12 @@
  lExt (*.lib)
  tExt (*.txt; *.h; *.inc)
  pExt (*.plm)
- CppX (*.cpp)
  DaveTm { 0,0,0,0,0,0,0,0 }
 
 Target (Target 1), 0x0000 // Tools: 'MCS-51'
 GRPOPT 1,(Source Group 1),1,0,0
 
-OPTFFF 1,1,2,2,0,4,31,0,<S:\p2.asm><p2.asm> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,226,255,255,255,100,0,0,0,100,0,0,0,143,4,0,0,217,1,0,0 }
+OPTFFF 1,1,2,0,0,47,65,0,<.\p2.asm><p2.asm> { 44,0,0,0,2,0,0,0,3,0,0,0,255,255,255,255,255,255,255,255,248,255,255,255,225,255,255,255,26,0,0,0,26,0,0,0,80,4,0,0,85,1,0,0 }
 
 
 TARGOPT 1, (Target 1)
@@ -21,11 +20,9 @@ TARGOPT 1, (Target 1)
   OPTTT 1,1,1,0
   OPTHX 0,65535,0,0,0
   OPTLX 120,65,8,<.\>
-  OPTOX 16
-  OPTLT 1,1,1,0,1,1,0,1,0,0,0,0
+  OPTLT 1,1,1,0,1,1,0,1,0,0,0
   OPTXL 1,1,1,1,1,1,1,0,0
   OPTFL 1,0,1
-  OPTAX 1
   OPTBL 0,(80C51 Family Programmer's Guide)<DATASHTS\PHILIPS\P51_PG.PDF>
   OPTBL 1,(Data Sheet)<DATASHTS\PHILIPS\P89LPC932a1.PDF>
   OPTBL 2,(User's Manual)<DATASHTS\PHILIPS\user_manual_P89LPC932a1.PDF>
