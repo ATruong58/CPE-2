@@ -13,6 +13,8 @@ loop:
 	jnc up
 	mov c, p2.2
 	jnc down
+	mov c, p2.3
+	jnc countdown
 	sjmp loop
 
 up:
@@ -52,7 +54,6 @@ delay_s:
 	mov r0, #255
 sound:
 	; Do sound here
-	
 	mov TMOD, #00010000b
 	mov TL1, #-614
 	mov TH1, #-614 shr 8
@@ -61,10 +62,23 @@ here:
 	jnb TF1, here
 	cpl p1.7
 	clr TR1
-	clr Tf1
+	clr TF1
 	djnz r0, sound
 	sjmp lights
-		
+
+countdown:
+	mov TMOD, #00010000b
+	mov TL1, #-614
+	mov TH1, #-614 shr 8
+	setb TR1
+count_here:
+	jnb TF1, here
+	clr TR1
+	clr TF1
+	acall light
+	djnz r4, countdown
+	sjmp loop
+
 delay:
 	mov r0, 255
 d_loop:
@@ -83,4 +97,17 @@ d_loop2:
 	djnz r0, d_loop
 	ret
 
+light:
+	mov a, r4; move counter val to acc
+	cpl a; invert for lights
+	mov c, 0e0h
+	;rrc a; send last bit to carry for use
+	mov p1.6, c; set light 0
+	mov c, 0e1h
+	mov p0.6, c; set light 1
+	mov c, 0e2h
+	mov p0.5, c; set light 2
+	mov c, 0e3h
+	mov p2.4, c; set light 3
+	ret return 
 end
