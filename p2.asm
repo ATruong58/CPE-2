@@ -13,8 +13,12 @@ loop:
 	jnc up
 	mov c, p2.2
 	jnc down
-	mov c, p2.3
-	jnc countdown
+	mov c, p0.0
+	jnc display_parity
+
+;	mov c, p2.3
+;	jnc countdown
+
 	sjmp loop
 
 up:
@@ -38,17 +42,49 @@ under:
 
 lights:
 	mov a, r4; move counter val to acc
-	cpl a; invert for lights
+	cpl a; invert for lights		       
 	mov c, 0e0h
-	;rrc a; send last bit to carry for use
 	mov p1.6, c; set light 0
-	mov c, 0e1h
+	mov c, 0e1h		
 	mov p0.6, c; set light 1
-	mov c, 0e2h
+	mov c, 0e2h		
 	mov p0.5, c; set light 2
-	mov c, 0e3h
+	mov c, 0e3h	
 	mov p2.4, c; set light 3
 	sjmp loop; return to loop
+
+;-----CHAU--------------------------------------------------
+display_parity:
+	mov a, r4
+	mov r0, #0 ;increment per 1 bit
+	mov r7, #4 ;decrement counter
+loop_parity:
+	rrc a
+	jc up_parity
+	djnz r7, loop_parity
+parity_zero:
+	mov a, r0
+	mov c, 0e0h
+	jc odd_parity
+	sjmp even_parity
+	
+up_parity:
+	inc r0
+	djnz r7, loop_parity
+	sjmp parity_zero
+
+odd_parity:
+	clr p2.7
+	acall delay
+	setb p2.7
+	sjmp loop
+
+even_parity:
+	clr p0.4
+	acall delay
+	setb p0.4
+	sjmp loop
+;-----------------------------------------------------------
 
 delay_s:
 	mov r0, #255
@@ -65,19 +101,6 @@ here:
 	clr TF1
 	djnz r0, sound
 	sjmp lights
-
-countdown:
-	mov TMOD, #00010000b
-	mov TL1, #-614
-	mov TH1, #-614 shr 8
-	setb TR1
-count_here:
-	jnb TF1, here
-	clr TR1
-	clr TF1
-	acall light
-	djnz r4, countdown
-	sjmp loop
 
 delay:
 	mov r0, 255
@@ -96,18 +119,4 @@ d_loop2:
 	djnz r1, d_loop2
 	djnz r0, d_loop
 	ret
-
-light:
-	mov a, r4; move counter val to acc
-	cpl a; invert for lights
-	mov c, 0e0h
-	;rrc a; send last bit to carry for use
-	mov p1.6, c; set light 0
-	mov c, 0e1h
-	mov p0.6, c; set light 1
-	mov c, 0e2h
-	mov p0.5, c; set light 2
-	mov c, 0e3h
-	mov p2.4, c; set light 3
-	ret return 
 end
