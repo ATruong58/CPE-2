@@ -1,15 +1,15 @@
-BL51 BANKED LINKER/LOCATER V4.02                                                        04/12/2018  16:24:37  PAGE 1
+BL51 BANKED LINKER/LOCATER V4.02                                                        04/12/2018  16:29:04  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V4.02, INVOKED BY:
-C:\KEIL\C51\BIN\BL51.EXE p2.obj TO Project2 RAMSIZE (256)
+C:\KEIL\C51\BIN\BL51.EXE p2.obj TO Projec2 RAMSIZE (256)
 
 
 INPUT MODULES INCLUDED:
   p2.obj (P2)
 
 
-LINK MAP OF MODULE:  Project2 (P2)
+LINK MAP OF MODULE:  Projec2 (P2)
 
 
             TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
@@ -23,7 +23,7 @@ LINK MAP OF MODULE:  Project2 (P2)
 
 
 
-SYMBOL TABLE OF MODULE:  Project2 (P2)
+SYMBOL TABLE OF MODULE:  Projec2 (P2)
 
   VALUE           TYPE          NAME
   ----------------------------------
@@ -59,7 +59,7 @@ SYMBOL TABLE OF MODULE:  Project2 (P2)
   D:00F2H         SYMBOL        DEEDAT
   C:005FH         SYMBOL        DELAY
   C:0045H         SYMBOL        DELAY_S
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:24:37  PAGE 2
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:29:04  PAGE 2
 
 
   D:0095H         SYMBOL        DIVM
@@ -119,7 +119,7 @@ SYMBOL TABLE OF MODULE:  Project2 (P2)
   B:0080H.1       SYMBOL        KB1
   B:0080H.2       SYMBOL        KB2
   B:0080H.3       SYMBOL        KB3
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:24:37  PAGE 3
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:29:04  PAGE 3
 
 
   B:0080H.4       SYMBOL        KB4
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  Project2 (P2)
   B:00B8H.3       SYMBOL        PT1
   B:00B8H.6       SYMBOL        PWDRT
   B:00B8H.0       SYMBOL        PX0
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:24:37  PAGE 4
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:29:04  PAGE 4
 
 
   B:00B8H.2       SYMBOL        PX1
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  Project2 (P2)
   B:00C8H.1       SYMBOL        TMOD21
   D:00CFH         SYMBOL        TOR2H
   D:00CEH         SYMBOL        TOR2L
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:24:37  PAGE 5
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:29:04  PAGE 5
 
 
   D:00CBH         SYMBOL        TPCR2H
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  Project2 (P2)
   C:0055H         LINE#         81
   C:0057H         LINE#         82
   C:0059H         LINE#         83
-BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:24:37  PAGE 6
+BL51 BANKED LINKER/LOCATER V4.02                                                      04/12/2018  16:29:04  PAGE 6
 
 
   C:005BH         LINE#         84

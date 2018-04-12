@@ -13,10 +13,10 @@ loop:
 	jnc up
 	mov c, p2.2
 	jnc down
-	mov c, p2.0
-	jnc ladd
-	mov c, p0.1
-	jnc ladd2
+;	mov c, p2.0
+;	jnc ladd
+;	mov c, p0.1
+;	jnc ladd2
 ;	mov c, p2.3
 ;	jnc countdown
 	sjmp loop
@@ -52,7 +52,7 @@ lights:
 	mov c, 0e3h
 	mov p2.4, c; set light 3
 	sjmp loop; return to loop
-
+/*
 lightsa:
 	mov a, r5; move counter val to acc
 	cpl a; invert for lights
@@ -66,6 +66,7 @@ lightsa:
 	mov c, 0e3h
 	mov p2.4, c; set light 3
 	sjmp loop; return to loop
+*/
 
 delay_s:
 	mov r0, #255
@@ -81,7 +82,8 @@ here:
 	clr TR1
 	clr TF1
 	djnz r0, sound
-	sjmp lightsa
+	sjmp lights
+
 /*
 countdown:
 	mov TMOD, #00010000b
@@ -97,6 +99,8 @@ count_here:
 	sjmp loop
 */
 
+
+/*
 ladd:
 	mov a, r4
 	mov r5, a
@@ -107,6 +111,8 @@ ladd2:
 	mov a,r5
 	add a, r6
 	sjmp lights
+*/
+
 delay:
 	mov r0, 255
 d_loop:
