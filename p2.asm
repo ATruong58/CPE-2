@@ -6,7 +6,7 @@ cseg at 0
 	mov 0x91, #0
 	mov 0x84, #0
 
-	mov r4, #0
+	mov r4, #0	
 
 loop:
 	mov c, p0.3
@@ -29,13 +29,10 @@ down:
 	sjmp under
 over:
 	mov r4, #00h
-	acall delay_s
-	sjmp lights
+	sjmp delay_s
 under:
 	mov r4, #0fh
-	acall delay_s
-	sjmp lights
-
+	sjmp delay_s
 
 lights:
 	mov a, r4; move counter val to acc
@@ -50,42 +47,23 @@ lights:
 	mov c, 0e3h
 	mov p2.4, c; set light 3
 	sjmp loop; return to loop
-	
-sound:
-	; Do sound here
-	mov TMOD, #02h
-	mov TH0, #255
-	mov TL0, #255
-	setb p1.7; I think this is the speaker
-	clr p2.5;
-	setb TR0
-back:
-	jnb TF0, back
-	clr p1.7
-	setb p2.5
-	clr TR0
-	clr TF0
-	sjmp lights
 
 delay_s:
-	mov r0, 255
-	setb p1.7
-d_loop_s:
-	mov r1, 255
-d_loop2_s:
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	nop
-	djnz r1, d_loop2_s
-	djnz r0, d_loop_s
-	clr p1.7
-	ret
+	mov r0, #255
+sound:
+	; Do sound here
+	
+	mov TMOD, #00010000b
+	mov TL1, #-614
+	mov TH1, #-614 shr 8
+	setb TR1
+here:
+	jnb TF1, here
+	cpl p1.7
+	clr TR1
+	clr Tf1
+	djnz r0, sound
+	sjmp lights
 		
 delay:
 	mov r0, 255
