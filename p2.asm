@@ -7,7 +7,8 @@ cseg at 0
 	mov 0x84, #0
 
 	mov r4, #0	
-
+	mov r5, #0
+	mov r6, #0
 loop:
 	mov c, p0.3
 	jnc up
@@ -16,9 +17,11 @@ loop:
 	mov c, p0.0
 	jnc display_parity
 	mov c, p2.0
-	jnc ladd
+	jnc ladd_jmp
 	mov c, p0.1
-	jnc ladd2
+	jnc ladd2_jmp
+	mov c, p2.3
+	jnc rand_jmp
 	sjmp loop
 up:
 	setb p0.3
@@ -39,6 +42,14 @@ under:
 	mov r4, #0fh
 	sjmp delay_s
 
+rand_jmp:
+	ljmp rand
+
+
+ladd_jmp:
+	ljmp ladd
+ladd2_jmp:
+	ljmp ladd2
 lights:
 	mov a, r4; move counter val to acc
 	cpl a; invert for lights		       
@@ -79,24 +90,24 @@ parity_zero:
 	mov a, r0
 	mov c, 0e0h
 	jc odd_parity
-	sjmp even_parity
+	ljmp even_parity
 	
 up_parity:
 	inc r0
 	djnz r7, loop_parity
-	sjmp parity_zero
+	ljmp parity_zero
 
 odd_parity:
 	clr p2.7
 	acall delay
 	setb p2.7
-	sjmp loop
+	ljmp loop
 
 even_parity:
 	clr p0.4
 	acall delay
 	setb p0.4
-	sjmp loop
+	ljmp loop
 ;-----------------------------------------------------------
 
 delay_s:
@@ -113,19 +124,38 @@ here:
 	clr TR1
 	clr TF1
 	djnz r0, sound
-	sjmp lights
+	ljmp lights
 
 ladd:
 	mov a, r4
+	acall delay
 	mov r5, a
-	sjmp loop
+	ljmp loop
 ladd2:
 	mov a,r4
+	acall delay
 	mov r6, a
 	mov a,r5
+	acall delay
 	add a, r6
-	sjmp lightsa
+	mov r5, a
+	ljmp lightsa
 
+;-----Cash--------------------------------------------------
+rand:
+	clr p2.7; turn on indicator light
+	inc r4; increment count
+	cjne r4, #10h, next; reset if we make it to 15
+	mov r4, #00h; 
+next:
+	mov c, p1.4; check for stop
+	setb p2.7; turn off indicator light
+	jnc light_jmp; jump if we stopped
+	sjmp rand; otherwise keep incrementing 
+;-----------------------------------------------------------
+
+light_jmp:
+	ljmp lights
 delay:
 	mov r0, 255
 d_loop:
