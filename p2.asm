@@ -15,12 +15,11 @@ loop:
 	jnc down
 	mov c, p0.0
 	jnc display_parity
-
-;	mov c, p2.3
-;	jnc countdown
-
+	mov c, p2.0
+	jnc ladd
+	mov c, p0.1
+	jnc ladd2
 	sjmp loop
-
 up:
 	setb p0.3
 	inc r4
@@ -52,6 +51,20 @@ lights:
 	mov c, 0e3h	
 	mov p2.4, c; set light 3
 	sjmp loop; return to loop
+
+lightsa:
+	mov a, r5; move counter val to acc
+	cpl a; invert for lights
+	mov c, 0e0h
+	mov p1.6, c; set light 0
+	mov c, 0e1h
+	mov p0.6, c; set light 1
+	mov c, 0e2h
+	mov p0.5, c; set light 2
+	mov c, 0e3h
+	mov p2.4, c; set light 3
+	sjmp loop; return to loop
+
 
 ;-----CHAU--------------------------------------------------
 display_parity:
@@ -101,6 +114,17 @@ here:
 	clr TF1
 	djnz r0, sound
 	sjmp lights
+
+ladd:
+	mov a, r4
+	mov r5, a
+	sjmp loop
+ladd2:
+	mov a,r4
+	mov r6, a
+	mov a,r5
+	add a, r6
+	sjmp lightsa
 
 delay:
 	mov r0, 255

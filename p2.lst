@@ -1,4 +1,4 @@
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     1
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     1
 
 
 MACRO ASSEMBLER A51 V6.02
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
   0083          +1    56     KB3         BIT     0x83
   0084          +1    57     KB4         BIT     0x84
   0085          +1    58     KB5         BIT     0x85
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     2
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     2
 
   0086          +1    59     KB6         BIT     0x86
   0087          +1    60     KB7         BIT     0x87
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
   0089          +1   122     TMOD    DATA    0x89
   008A          +1   123     TL0         DATA        0x8A
   008C          +1   124     TH0         DATA        0x8C
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     3
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     3
 
   008B          +1   125     TL1         DATA        0x8B
   008D          +1   126     TH1         DATA        0x8D
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
                 +1   188     ;******* Real Time Clock *******
   00D3          +1   189     RTCL    DATA    0xD3
   00D2          +1   190     RTCH    DATA    0xD2
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     4
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     4
 
   00D1          +1   191     RTCCON  DATA    0xD1
                 +1   192     ;******* Interrupts ************
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
 0003 759100          254             mov 0x91, #0
 0006 758400          255             mov 0x84, #0
                      256     
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     5
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     5
 
 0009 7C00            257             mov r4, #0      
                      258     
@@ -278,82 +278,146 @@ LOC  OBJ            LINE     SOURCE
 000D 5006            261             jnc up
 000F A2A2            262             mov c, p2.2
 0011 500C            263             jnc down
-0013 80F6            264             sjmp loop
-                     265     
-0015                 266     up:
-0015 D283            267             setb p0.3
-0017 0C              268             inc r4
-0018 115F            269             acall delay
-001A BC1014          270             cjne r4, #10h, lights
-001D 800A            271             sjmp over
-001F                 272     down:
-001F D2A2            273             setb p2.2
-0021 1C              274             dec r4
-0022 115F            275             acall delay
-0024 BCFF0A          276             cjne r4, #0ffh, lights
-0027 8004            277             sjmp under
-0029                 278     over:
-0029 7C00            279             mov r4, #00h
-002B 8018            280             sjmp delay_s
-002D                 281     under:
-002D 7C0F            282             mov r4, #0fh
-002F 8014            283             sjmp delay_s
-                     284     
-0031                 285     lights:
-0031 EC              286             mov a, r4; move counter val to acc
-0032 F4              287             cpl a; invert for lights
-0033 A2E0            288             mov c, 0e0h
-                     289             ;rrc a; send last bit to carry for use
-0035 9296            290             mov p1.6, c; set light 0
-0037 A2E1            291             mov c, 0e1h
-0039 9286            292             mov p0.6, c; set light 1
-003B A2E2            293             mov c, 0e2h
-003D 9285            294             mov p0.5, c; set light 2
-003F A2E3            295             mov c, 0e3h
-0041 92A4            296             mov p2.4, c; set light 3
-0043 80C6            297             sjmp loop; return to loop
-                     298     
-0045                 299     delay_s:
-0045 78FF            300             mov r0, #255
-0047                 301     sound:
-                     302             ; Do sound here
-                     303             
-0047 758910          304             mov TMOD, #00010000b
-004A 758B9A          305             mov TL1, #-614
-*** ___________________________________________^
-*** WARNING #A52 IN 305 (.\p2.asm, LINE 57): VALUE HAS BEEN TRUNCATED TO 8 BITS
-004D 758DFD          306             mov TH1, #-614 shr 8
-0050 D28E            307             setb TR1
-0052                 308     here:
-0052 308FFD          309             jnb TF1, here
-0055 B297            310             cpl p1.7
-0057 C28E            311             clr TR1
-0059 C28F            312             clr Tf1
-005B D8EA            313             djnz r0, sound
-005D 80D2            314             sjmp lights
-                     315                     
-005F                 316     delay:
-005F A8FF            317             mov r0, 255
-0061                 318     d_loop:
-0061 A9FF            319             mov r1, 255
-0063                 320     d_loop2:
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     6
+                     264     ;       mov c, p2.0
+                     265     ;       jnc ladd
+                     266     ;       mov c, p0.1
+                     267     ;       jnc ladd2
+                     268     ;       mov c, p2.3
+                     269     ;       jnc countdown
+0013 80F6            270             sjmp loop
+0015                 271     up:
+0015 D283            272             setb p0.3
+0017 0C              273             inc r4
+0018 115F            274             acall delay
+001A BC1014          275             cjne r4, #10h, lights
+001D 800A            276             sjmp over
+001F                 277     down:
+001F D2A2            278             setb p2.2
+0021 1C              279             dec r4
+0022 115F            280             acall delay
+0024 BCFF0A          281             cjne r4, #0ffh, lights
+0027 8004            282             sjmp under
+0029                 283     over:
+0029 7C00            284             mov r4, #00h
+002B 8018            285             sjmp delay_s
+002D                 286     under:
+002D 7C0F            287             mov r4, #0fh
+002F 8014            288             sjmp delay_s
+                     289     
+0031                 290     lights:
+0031 EC              291             mov a, r4; move counter val to acc
+0032 F4              292             cpl a; invert for lights
+0033 A2E0            293             mov c, 0e0h
+                     294             ;rrc a; send last bit to carry for use
+0035 9296            295             mov p1.6, c; set light 0
+0037 A2E1            296             mov c, 0e1h
+0039 9286            297             mov p0.6, c; set light 1
+003B A2E2            298             mov c, 0e2h
+003D 9285            299             mov p0.5, c; set light 2
+003F A2E3            300             mov c, 0e3h
+0041 92A4            301             mov p2.4, c; set light 3
+0043 80C6            302             sjmp loop; return to loop
+                     303     
+                     304     
+                     305     
+                     306     
+                     307     
+                     308     
+                     309     
+                     310     
+                     311     
+                     312     
+                     313     
+                     314     
+                     315     
+                     316     
+                     317     
+                     318     
+0045                 319     delay_s:
+0045 78FF            320             mov r0, #255
+0047                 321     sound:
+                     322             ; Do sound here
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     6
 
-0063 00              321             nop
-0064 00              322             nop
-0065 00              323             nop
-0066 00              324             nop
-0067 00              325             nop
-0068 00              326             nop
-0069 00              327             nop
-006A 00              328             nop
-006B 00              329             nop
-006C D9F5            330             djnz r1, d_loop2
-006E D8F1            331             djnz r0, d_loop
-0070 22              332             ret
-                     333     
-                     334     end
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     7
+0047 758910          323             mov TMOD, #00010000b
+004A 758B9A          324             mov TL1, #-614
+*** ___________________________________________^
+*** WARNING #A52 IN 324 (.\p2.asm, LINE 76): VALUE HAS BEEN TRUNCATED TO 8 BITS
+004D 758DFD          325             mov TH1, #-614 shr 8
+0050 D28E            326             setb TR1
+0052                 327     here:
+0052 308FFD          328             jnb TF1, here
+0055 B297            329             cpl p1.7
+0057 C28E            330             clr TR1
+0059 C28F            331             clr TF1
+005B D8EA            332             djnz r0, sound
+005D 80D2            333             sjmp lights
+                     334     
+                     335     
+                     336     
+                     337     
+                     338     
+                     339     
+                     340     
+                     341     
+                     342     
+                     343     
+                     344     
+                     345     
+                     346     
+                     347     
+                     348     
+                     349     
+                     350     
+                     351     
+                     352     
+                     353     
+                     354     
+                     355     
+                     356     
+                     357     
+                     358     
+                     359     
+                     360     
+                     361     
+                     362     
+                     363     
+005F                 364     delay:
+005F A8FF            365             mov r0, 255
+0061                 366     d_loop:
+0061 A9FF            367             mov r1, 255
+0063                 368     d_loop2:
+0063 00              369             nop
+0064 00              370             nop
+0065 00              371             nop
+0066 00              372             nop
+0067 00              373             nop
+0068 00              374             nop
+0069 00              375             nop
+006A 00              376             nop
+006B 00              377             nop
+006C D9F5            378             djnz r1, d_loop2
+006E D8F1            379             djnz r0, d_loop
+0070 22              380             ret
+                     381     
+                     382     
+                     383     
+                     384     
+                     385     
+                     386     
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     7
+
+                     387     
+                     388     
+                     389     
+                     390     
+                     391     
+                     392     
+                     393     
+                     394     
+                     395     
+                     396     end
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     8
 
 SYMBOL TABLE LISTING
 ------ ----- -------
@@ -421,7 +485,7 @@ HLTEN. . . . . . .  B ADDR   00C8H.5 A
 HLTRN. . . . . . .  B ADDR   00C8H.6 A   
 I2ADR. . . . . . .  D ADDR   00DBH   A   
 I2CON. . . . . . .  D ADDR   00D8H   A   
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     8
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE     9
 
 I2DAT. . . . . . .  D ADDR   00DAH   A   
 I2EN . . . . . . .  B ADDR   00D8H.6 A   
@@ -489,7 +553,7 @@ P3 . . . . . . . .  D ADDR   00B0H   A
 P3M1 . . . . . . .  D ADDR   00B1H   A   
 P3M2 . . . . . . .  D ADDR   00B2H   A   
 PB0. . . . . . . .  B ADDR   00B8H.5 A   
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE     9
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE    10
 
 PCCU . . . . . . .  B ADDR   00F8H.4 A   
 PCL. . . . . . . .  B ADDR   00F8H.2 A   
@@ -557,7 +621,7 @@ TH2. . . . . . . .  D ADDR   00CDH   A
 TI . . . . . . . .  B ADDR   0098H.1 A   
 TICR2. . . . . . .  D ADDR   00C9H   A   
 TIFR2. . . . . . .  D ADDR   00E9H   A   
-A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 12:43:39 PAGE    10
+A51 MACRO ASSEMBLER  P2                                                                   04/12/2018 16:39:50 PAGE    11
 
 TISE2. . . . . . .  D ADDR   00DEH   A   
 TL0. . . . . . . .  D ADDR   008AH   A   
